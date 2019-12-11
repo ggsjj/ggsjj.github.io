@@ -933,11 +933,15 @@ WantedBy=multi-user.target
 EOF
 
 
+sudo apt-get update
+
 sudo apt-get install linux-image-4.4.0-47-generic linux-image-extra-4.4.0-47-generic
 
 sudo apt-get purge 
 
 sudo apt-get remove linux-image-4.15.0-1050-gcp 
+
+sudo update-grub
 
 
 chmod +x /usr/lib/systemd/system/trojan.service
