@@ -1,0 +1,56 @@
+  
+  动态端口KCP
+  
+  
+  
+   {
+      "port": 54121,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "d17a1af7-efa5-42ca-b7e9-6a35282d737f",
+            "level": 1,
+            "alterId": 64
+          }
+        ],
+        "detour": {        
+          "to": "dynamicPort"   
+        }
+      },
+      "streamSettings": {
+        "network": "mkcp",
+	           "kcpSettings": {
+	           "header": {
+	"type": "wechat-video"
+			  }
+			 }
+				
+      }
+    },
+    {
+      "protocol": "vmess",
+      "port": "20000-30000",
+      "tag": "dynamicPort",       
+      "settings": {
+        "default": {
+          "level": 1,
+          "alterId": 32
+        }
+      },
+      "allocate": {            
+        "strategy": "random",  
+        "concurrency": 2,   
+        "refresh": 3  
+      },
+      "streamSettings": {
+        "network": "mkcp",
+	      "kcpSettings": {
+		"header": {
+		"type": "wechat-video"
+			   }
+	    }
+
+      }
+ 
+}
