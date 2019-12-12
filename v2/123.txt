@@ -65,7 +65,9 @@ curl  https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 acme.sh --issue -d en.vvppmm.xyz -w /home/en.vvppmm.xyz
 
-acme.sh --issue -d en.vvppmm.xyz --standalone -k ec-256
+acme.sh --issue -d en.vvppmm.xyz -w /home/en.vvppmm.xyz -k ec-256
+
+acme.sh --issue -d en.vvppmm.xyz --standalone -k ec-256    不需要nginx
 
 
 
