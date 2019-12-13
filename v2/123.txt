@@ -937,6 +937,8 @@ EOF
 
 sudo apt-get update
 
+dpkg -l|grep linux-image
+
 sudo apt-get install linux-image-4.4.0-47-generic linux-image-extra-4.4.0-47-generic
 
 sudo apt-get purge 
@@ -955,3 +957,15 @@ systemctl stop trojan.service
 systemctl restart nginx.service
 systemctl status nginx.service
 systemctl enable nginx.service
+
+service v2ray restart
+service v2ray start
+service v2ray status
+
+service nginx start
+service nginx restart
+service nginx status
+
+service trojan start
+service trojan restart
+service trojan status
