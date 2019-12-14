@@ -209,8 +209,8 @@ server {
     location /api {
 
       if ($http_upgrade != "websocket") { 
-          return 403;
-	｝
+          return 404;
+	}
       proxy_redirect off;
       proxy_pass http://127.0.0.1:54123;
       proxy_http_version 1.1;
@@ -274,7 +274,7 @@ vi /usr/local/caddy/Caddyfile
 停止：/etc/init.d/caddy stop
 重启：/etc/init.d/caddy restart
 查看状态：/etc/init.d/caddy status
-查看Caddy启?罩荆簍ail -f /tmp/caddy.log
+查看Caddy启动日志：tail -f /tmp/caddy.log
 安装目录：/usr/local/caddy
 Caddy配置文件位置：/usr/local/caddy/Caddyfile
 Caddy自动申请SSL证书位置：/.caddy/acme/acme-v01.api.letsencrypt.org/sites/xxx.xxx(域名)/
