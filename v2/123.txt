@@ -969,3 +969,76 @@ service nginx status
 service trojan start
 service trojan restart
 service trojan status
+
+
+
+
+=====trojan==NGINX配置==优化版===
+
+
+server {
+  listen 127.0.0.1:80;
+    server_name aas.vvppmm.xyz;
+    location / {
+      root /usr/share/nginx/html/;
+        index index.html;
+        }
+  add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+}
+server {
+    listen 80;
+    listen [::]:80;
+    server_name aas.vvppmm.xyz;
+    return 301 https://aas.vvppmm.xyz;
+}
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;
+}
+
+
+
+
+
+
+
+
+
+======NGINX========优化====nginx.conf=========
+
+user nginx; #这个不用改，默认的就行（nginx新旧两套配置模板不一样）
+worker_processes auto; #worker数量必须和CPU核心数量一样，选择auto可以自动设置
+
+error_log /var/log/nginx/error.log warn;
+pid /var/run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+events {
+	worker_connections 1024; #决定每个Worker进程可以服务多少客户
+	use epoll; #使用异步架构，一个线程可以服务许多客户
+	multi_accept on; #同时接受尽可能多的连接
+}
+
+http {
+    aio threads; #使用异步i/o,避免因为i/o问题导致Nginx阻塞
+	charset UTF-8; #使用UTF-8避免中文乱码问题
+	tcp_nodelay on; #不要缓存数据，尽可能快速发送
+	tcp_nopush on; #将http headers一起发送，而非一个个分开发送
+	server_tokens off; #不发送Nginx版本号，提高安全性
+
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+
+	access_log /var/log/nginx/access.log;
+
+
+	log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    '$status $body_bytes_sent "$http_referer" '
+    '"$http_user_agent" "$http_x_forwarded_for"';
+
+    sendfile on; #支持將數據從一個地方直接複製到另一個地方
+	gzip on; #使用gzip压缩降低带宽占用
+
+	include /etc/nginx/conf.d/*.conf;	
+}
