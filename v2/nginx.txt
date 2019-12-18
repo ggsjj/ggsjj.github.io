@@ -60,3 +60,54 @@ chkconfig nginx on
 我这里省略了nginx的配置，如果你连ssl都不会配置，你也不会来看TLS1.3。
 
 我这里以谷歌浏览器为例，通过F12，在Security可以看到TLS1.3是生效的。
+
+
+
+
+============================NGINX======编译TLS1.3============
+
+
+1.安装编译依赖
+
+apt-get update && apt-get upgrade -y
+apt install -y git unzip curl sudo socat build-essential
+apt-get install libpcre3 libpcre3-dev -y
+apt-get install zlibc zlib1g zlib1g-dev -y
+2.添加非root用户用于编译Nginx
+
+adduser test
+sudo su test
+cd
+3.拉取Nginx和Openssl源代码
+
+wget http://nginx.org/download/nginx-1.17.6.tar.gz
+wget https://www.openssl.org/source/openssl-1.1.1d.tar.gz
+tar -xvf nginx-1.17.6.tar.gz
+tar -xvf openssl-1.1.1d.tar.gz
+rm nginx-1.17.6.tar.gz
+rm openssl-1.1.1d.tar.gz
+4.编译安装
+
+cd nginx-1.17.6
+./configure --with-openssl=../openssl-1.1.1d --with-openssl-opt="no-ssl2 no-ssl3 no-weak-ssl-ciphers" --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nginx --group=nginx --with-compat --with-file-aio --with-threads --with-http_realip_module --with-http_secure_link_module --with-http_ssl_module --with-http_v2_module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module
+
+make
+make install
+nginx模块可以按需安装
+
+5.验证
+
+ssl_protocols         TLSv1.3 TLSv1.2;
+可以通过ssllab验证
+SSL Server Test (Powered by Qualys SSL Labs)
+A comprehensive free SSL test for your public web servers.
+
+
+ 
+
+6.0*rtt启用
+
+ssl_early_data on;
+7.题外话
+
+其他没感觉，不过TLS1.3的延迟确实比TLS1.2低。好评！！！
