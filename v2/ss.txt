@@ -27,6 +27,10 @@ go mod download
 go build
 cp v2ray-plugin /usr/bin/v2ray-plugin
 
+或者
+wget https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.2.0/v2ray-plugin-linux-amd64-v1.2.0.tar.gz
+tar zxvf v2ray-plugin-linux-amd64-v1.2.0.tar.gz
+cp v2ray-plugin /usr/bin/v2ray-plugin
 ==============================================================
 如安装失败 最后面2种
 
