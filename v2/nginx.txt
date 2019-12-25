@@ -111,3 +111,18 @@ ssl_early_data on;
 7.题外话
 
 其他没感觉，不过TLS1.3的延迟确实比TLS1.2低。好评！！！
+
+====cnetos7===NGINX==TLS1.3====
+
+    yum install -y libtool perl-core zlib-devel gcc wget pcre* unzip
+    wget https://www.openssl.org/source/openssl-1.1.1a.tar.gz
+    tar xzvf openssl-1.1.1a.tar.gz
+    
+    mkdir /etc/nginx
+    mkdir /etc/nginx/ssl
+    mkdir /etc/nginx/conf.d
+    wget https://nginx.org/download/nginx-1.15.8.tar.gz
+    tar xf nginx-1.15.8.tar.gz && rm nginx-1.15.8.tar.gz
+    cd nginx-1.15.8
+    ./configure --prefix=/etc/nginx --with-openssl=../openssl-1.1.1a --with-openssl-opt='enable-tls1_3' --with-http_v2_module --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_sub_module --with-stream --with-stream_ssl_module
+    make && make install
