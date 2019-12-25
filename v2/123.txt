@@ -14,7 +14,7 @@ echo "net.ipv4.tcp_fastopen = 3" >> /etc/sysctl.conf
 /etc/sysctl.conf中添加
 net.ipv4.tcp_fastopen = 3
 
-
+DDNS  */2 * * * * curl "http://api.dynu.com/nic/update?hostname=域名&password=密码" >/dev/null 2>&1
 
 cnetos7 换内核
 
@@ -30,7 +30,10 @@ default=1  #1为顺序
 　　默认情况Centos7中无Nginx的源，最近发现Nginx官网提供了Centos的源地址。因此可以如下执行命令添加源：
 
 sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
- 
+
+
+
+
 
 2、安装Nginx
 
@@ -60,6 +63,7 @@ systemctl restart nginx.service   重启NG
 
 =================================================
 
+apt-get install socat -y
 
 curl  https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
