@@ -30,6 +30,7 @@ cp v2ray-plugin /usr/bin/v2ray-plugin
 或者
 wget https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.2.0/v2ray-plugin-linux-amd64-v1.2.0.tar.gz
 tar zxvf v2ray-plugin-linux-amd64-v1.2.0.tar.gz
+mv v2ray-plugin_linux_amd64 v2ray-plugin
 cp v2ray-plugin /usr/bin/v2ray-plugin
 ==============================================================
 如安装失败 最后面2种
@@ -141,6 +142,7 @@ sudo vi /etc/shadowsocks-libev/config.json
 4、创建Shadowsocks-libev.service配置文件
 
 sudo vi /etc/systemd/system/shadowsocks-libev.service
+
 复制粘贴：
 
 [Unit]
@@ -154,6 +156,8 @@ Restart=on-abort
 
 [Install]
 WantedBy=multi-user.target
+
+
 5、启动Shadowsocks：
 
 sudo systemctl start shadowsocks-libev
